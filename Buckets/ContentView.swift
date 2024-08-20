@@ -20,15 +20,23 @@ struct ContentView: View {
     @State private var selection: Bucket?
     
     var body: some View {
-        ForEach buckets, id: \.self { bucket in
-            
+        Button {
+            let first = Bucket(id: <#UUID#>, name: "TSLA", createDate: .now.addingTimeInterval(86400 * -10))
+            let second = Bucket(id: <#UUID#>, name: "AAPL", createDate: .now.addingTimeInterval(86400 * 5))
+            modelContext.insert(first)
+            modelContext.insert(second)
+            let item1 = Item(id: <#UUID#>, createDate: .now, status: "buy", qty: 20, price: 10, total: 0)
+            let item2 = Item(id: <#UUID#>, createDate: .now, status: "buy", qty: 30, price: 5, total: 0)
+            first.items.append(item1)
+            first.items.append(item2)
+        } label: {
+            Text("Add Sample")
         }
         
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            ForEach (buckets, id: \.self) { bucket in
+                Text("\(bucket.name)")
+            }
         }
         .padding()
     }

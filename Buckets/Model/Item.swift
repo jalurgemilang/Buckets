@@ -11,14 +11,14 @@ import SwiftData
 @Model
 class Item {
     var id: UUID
-    var createDate: String
+    var createDate: Date
     var status: String
     var qty: Int
     var price: Decimal
     var total: Decimal
     var owner: Bucket?
     
-    init(id: UUID, createDate: String, status: String, qty: Int, price: Decimal, total: Decimal, owner: Bucket? = nil) {
+    init(id: UUID, createDate: Date, status: String, qty: Int, price: Decimal, total: Decimal, owner: Bucket? = nil) {
         self.id = id
         self.createDate = createDate
         self.status = status
