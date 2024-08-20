@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct BucketsApp: App {
@@ -13,5 +14,6 @@ struct BucketsApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: Bucket.self)
     }
 }
