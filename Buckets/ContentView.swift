@@ -17,16 +17,14 @@ struct ContentView: View {
 //        user.city == "PJ"
 //    }, sort: \User.name) var users: [User]
     
-    @State private var selection: Bucket?
-    
     var body: some View {
         Button {
-            let first = Bucket(id: <#UUID#>, name: "TSLA", createDate: .now.addingTimeInterval(86400 * -10))
-            let second = Bucket(id: <#UUID#>, name: "AAPL", createDate: .now.addingTimeInterval(86400 * 5))
+            let first = Bucket(id: UUID(), name: "TSLA", createDate: .now.addingTimeInterval(86400 * -10))
+            let second = Bucket(id: UUID(), name: "AAPL", createDate: .now.addingTimeInterval(86400 * 5))
             modelContext.insert(first)
             modelContext.insert(second)
-            let item1 = Item(id: <#UUID#>, createDate: .now, status: "buy", qty: 20, price: 10, total: 0)
-            let item2 = Item(id: <#UUID#>, createDate: .now, status: "buy", qty: 30, price: 5, total: 0)
+            let item1 = Item(id: UUID(), createDate: .now, status: "buy", qty: 20, price: 10, total: 0)
+            let item2 = Item(id: UUID(), createDate: .now, status: "buy", qty: 30, price: 5, total: 0)
             first.items.append(item1)
             first.items.append(item2)
         } label: {
@@ -34,9 +32,23 @@ struct ContentView: View {
         }
         
         VStack {
-            ForEach (buckets, id: \.self) { bucket in
-                Text("\(bucket.name)")
-            }
+            ScrollView(Axis.Set.horizontal, showsIndicators: true) {
+                HStack(spacing: 80) {
+                    ForEach (buckets, id: \.self) { bucket in
+                        //note to self: I might not be able to use \.self to uniquely identify bucket
+                        VStack{
+                            Text("Alignment to push-out")
+                            Text("\(bucket.name)")
+                            List (bucket.items, id: \.self) { item in
+                                //note to self: I might not be able to use \.self to uniquely identify item
+                                ItemRow(item: item)
+                            }
+                        }
+                        
+                    }
+                    
+                }//HStack
+            }//ScrollView
         }
         .padding()
     }
