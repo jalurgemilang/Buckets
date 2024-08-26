@@ -11,23 +11,16 @@ struct ItemRow: View {
     var item: Item
     
     var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 15)
-                .fill(Color.green)
-            HStack(spacing:80) {
+
+            VStack {
                 Image(systemName: "person.circle.fill")
-                Text(String(item.qty))
-                Text(String(item.price))
-                Text(String(item.total))
-                    
+                Text(item.qty.description)
+                Text(item.status)
+                Text(item.price.description)
+                Text(item.total.description)
             }
             .padding(.horizontal, 20)
-
-        }
     }
 }
 
-#Preview {
-    let item = Item(id: UUID(), createDate: .now, status: "buy", qty: 10, price: 19.10, total: 191.10, owner: nil)
-    ItemRow(item: item)
-}
+// MARK: - PREVIEWS

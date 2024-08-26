@@ -30,27 +30,32 @@ struct ContentView: View {
         } label: {
             Text("Add Sample")
         }
-        
-        VStack {
-            ScrollView(Axis.Set.horizontal, showsIndicators: true) {
-                HStack(spacing: 80) {
-                    ForEach (buckets, id: \.self) { bucket in
-                        //note to self: I might not be able to use \.self to uniquely identify bucket
-                        VStack{
-                            Text("Alignment to push-out")
-                            Text("\(bucket.name)")
-                            List (bucket.items, id: \.self) { item in
-                                //note to self: I might not be able to use \.self to uniquely identify item
-                                ItemRow(item: item)
-                            }
-                        }
+                
+        ScrollView(Axis.Set.horizontal, showsIndicators: true) {
+            HStack(spacing: 5) {
+                ForEach (buckets, id: \.self) { bucket in
+                    //note to self: I might not be able to use \.self to uniquely identify bucket
+                    VStack(alignment: .leading) {
                         
+                        Text("\(bucket.name)")
+                        List (bucket.items, id: \.self) { item in
+                            //note to self: I might not be able to use \.self to uniquely identify item
+                            ItemRow(item: item)
+                        }
+                        .listStyle(PlainListStyle())//remove the side bars in List
+                        
+
                     }
-                    
-                }//HStack
-            }//ScrollView
-        }
-        .padding()
+                    .padding()
+                    .foregroundStyle(Color.white)
+                    .background(RoundedRectangle(cornerRadius: 10))
+                    .foregroundStyle(.blue)
+                    .padding()
+                }
+            }//HStack
+            .scrollTargetLayout()
+        }//ScrollView
+        .scrollTargetBehavior(.paging)        
     }
 }
 
